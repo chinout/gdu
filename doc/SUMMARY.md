@@ -17,7 +17,7 @@
     * [原子操作](multithread/atomic.md)
     * [互斥量](multithread/mutex.md)
     * [锁](multithread/lock.md)
-    * [条件变量](multithread/contional.md)
+    * [条件变量](multithread/conditional.md)
     * [共享内存](multithread/shared_memory.md)
     * [线程](multithread/thread.md)
     * [线程池](multithread/thread_pool.md)
