@@ -6,7 +6,7 @@
     * [调试相关](base/debug.md)
     * [错误码](base/error_code.md)
     * [数据类型集合](base/type.md)
-    * [sdu.h](base/sdu.md)
+    * [gdu.h](base/gdu.md)
 * [算法相关簇](algorithm/README.md)
     * [CRC](algorithm/crc.md)
     * [MD5](algorithm/md5.md)
