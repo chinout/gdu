@@ -9,12 +9,23 @@
 namespace gdp {
 namespace gdu {
 
-uint32_t get_time() {
+enum TimeConstants
+{
+    kMinute         = 60,
+    kHour           = kMinute * 60,
+    kDay            = kHour * 24,
+    kWeek           = kDay * 7,
+    kMonth          = kDay * 30,
+    kYear           = kMonth * 12,
+    kInMillisecond  = 1000
+};
+
+inline uint32_t get_time() {
     std::time_t time = std::time(nullptr);
     return time;
 }
 
-uint64_t get_millisecond() {
+inline uint64_t get_millisecond() {
     return std::chrono::duration_cast<std::chrono::milliseconds>
                 (std::chrono::system_clock::now().time_since_epoch()).count();
 }

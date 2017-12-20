@@ -14,9 +14,7 @@ namespace gdu {
 
 template <typename T>
 std::string to_string(const T& t) {
-    std::ostringstream o;
-    o << t;
-    return o.str();
+    return std::to_string(t);
 }
 
 template <typename K, typename V>
