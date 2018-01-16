@@ -17,6 +17,10 @@ std::string to_string(const T& t) {
     return std::to_string(t);
 }
 
+inline std::string to_string(const char* const& t) {
+    return std::string(t);
+}
+
 template <typename K, typename V>
 std::string to_string(const std::map<K, V>& m);
 
