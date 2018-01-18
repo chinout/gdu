@@ -14,45 +14,40 @@ namespace gdu {
 
 template <typename K, typename V>
 class LockedMap {
- private:
-    std::mutex _lock;
-    std::map<K, V> _map;
-
  public:
     LockedMap() = default;
     virtual ~LockedMap() = default;
+    LockedMap(const LockedMap<K, V>&) = delete;
+    LockedMap<K, V>& operator = (const LockedMap<K, V>&) = delete;
 
     void insert(const K& key, const V& value) {
-        std::lock_guard<std::mutex> g(this->_lock);
-        _map.insert(std::make_pair(key, value));
+        std::lock_guard<std::mutex> g(this->mutex_);
+        data_.insert(std::make_pair(key, value));
     }
 
     V find(const K& key) {
-        std::lock_guard<std::mutex> g(this->_lock);
-        return _map.find(key) == _map.end() ? V() : _map[key];
+        std::lock_guard<std::mutex> g(this->mutex_);
+        return data_.find(key) == data_.end() ? V() : data_[key];
     }
 
     bool erase(const K& key) {
-        return _map.erase(key);
-    }
-
-    void lock() {
-        this->_lock.lock();
-    }
-
-    void unlock() {
-        this->_lock.unlock();
+        std::lock_guard<std::mutex> g(this->mutex_);
+        return data_.erase(key);
     }
 
     bool empty() {
-        std::lock_guard<std::mutex> g(this->_lock);
-        return _map.empty();
+        std::lock_guard<std::mutex> g(this->mutex_);
+        return data_.empty();
     }
 
     size_t size() {
-        std::lock_guard<std::mutex> g(this->_lock);
-        return _map.size();
+        std::lock_guard<std::mutex> g(this->mutex_);
+        return data_.size();
     }
+
+ private:
+    std::map<K, V> data_;
+    std::mutex mutex_;
 };
 
 }  // namespace gdu 
