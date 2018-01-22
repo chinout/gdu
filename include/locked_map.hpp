@@ -20,9 +20,9 @@ class LockedMap {
     LockedMap(const LockedMap<K, V>&) = delete;
     LockedMap<K, V>& operator = (const LockedMap<K, V>&) = delete;
 
-    void insert(const K& key, const V& value) {
+    bool insert(const K& key, const V& value) {
         std::lock_guard<std::mutex> g(this->mutex_);
-        data_.insert(std::make_pair(key, value));
+        return data_.insert(std::make_pair(key, value)).second;
     }
 
     V find(const K& key) {
