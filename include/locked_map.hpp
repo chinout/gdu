@@ -45,6 +45,15 @@ class LockedMap {
         return data_.size();
     }
 
+    typename std::map<K, V>::iterator begin() {
+        std::lock_guard<std::mutex> g(this->mutex_);
+        return data_.begin();
+    }
+
+    typename std::map<K, V>::iterator end() {
+        std::lock_guard<std::mutex> g(this->mutex_);
+        return data_.end();
+    }
  private:
     std::map<K, V> data_;
     std::mutex mutex_;
