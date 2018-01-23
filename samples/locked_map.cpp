@@ -10,7 +10,7 @@ int main() {
     lmap.insert(2, 2);
     auto ret = lmap.find(2);
     cout << lmap.size() << endl;
-    cout << ret << endl;
+    cout << ret->second << endl;
     
     lmap.erase(2);
     cout << lmap.size() << endl;
