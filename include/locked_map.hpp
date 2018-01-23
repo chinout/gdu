@@ -25,6 +25,11 @@ class LockedMap {
         return data_.insert(std::make_pair(key, value)).second;
     }
 
+    void update(const K& key, const V& value) {
+        std::lock_guard<std::mutex> g(this->mutex_);
+        data_[key] = value;
+    }
+
     typename std::map<K, V>::iterator find(const K& key) {
         std::lock_guard<std::mutex> g(this->mutex_);
         return data_.find(key);
