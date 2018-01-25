@@ -27,7 +27,7 @@ class ConsistentLockedMap {
         return data_.insert(std::make_pair(hash, node)).second;
     }
 
-    bool update(const K& hash, const V& node) {
+    void update(const K& hash, const V& node) {
         std::lock_guard<std::mutex> g(this->mutex_);
         data_[hash] = node;
     }
