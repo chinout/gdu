@@ -9,6 +9,7 @@
 #include <functional>
 #include <list>
 #include <memory>
+#include <unistd.h>
 
 namespace gdp {
 namespace gdu {
@@ -24,7 +25,7 @@ enum TimeConstants
     kInMilliSecond  = 1000,
 };
 
-inline uint32_t get_time() {
+inline uint64_t get_time() {
     std::time_t time = std::time(nullptr);
     return time;
 }
@@ -92,12 +93,12 @@ class TimerTask {
     TimerTask() = default;
     virtual ~TimerTask() = default;
     
-    explicit TimerTask(uint32_t interval, std::function<void()> f) {
+    explicit TimerTask(uint64_t interval, std::function<void()> f) {
         timer_.set_interval(interval);
         func_ = f;
     }
 
-    void Update(uint32_t diff) {
+    void Update(uint64_t diff) {
         timer_.Update(diff);
         if (timer_.Passed()) {
             timer_.Reset();
@@ -112,17 +113,48 @@ class TimerTask {
 
 class TimerManager {
  public:
-    TimerManager() = default;
+    TimerManager():current_time_(0), previous_sleep_time_(0) {
+        previous_time_ = get_millisecond();
+    }
     virtual ~TimerManager() = default;
 
     template<typename Obj>
-    void AddTask(Obj* obj, uint32_t interval, void (Obj::*func)()) {
+    void AddTask(Obj* obj, uint64_t interval, void (Obj::*func)()) {
         tasks_.push_back(
                 std::make_shared<TimerTask>(interval,
                    std::bind(func, obj)));
     }
 
-    void Update(uint32_t diff) {
+    void Tick() {
+        current_time_ = get_millisecond(); 
+
+        time_t diff;
+        // get_millisecond() have limited data range and this is case when it
+        // overflow in this tick
+        if (previous_time_ > current_time_) {
+            diff = 0xFFFFFFFFFFFFFFFF - (previous_time_ - current_time_);
+        } else {
+            diff = current_time_ - previous_time_;
+        }
+        Update(diff);
+        
+        previous_time_ = current_time_;
+
+        // diff (D0) include time of previous sleep (d0) + tick time (t0)
+        // we want that next d1 + t1 == kSleepConst
+        // we can't know next t1 and then can use(t0 + d1) == kSleepConst requirement
+        // d1 = kSleepConst - t0 = kSleepConst - (D0 - d0) = kSleepConst + d0 - D0
+        if (diff <= kSleepConst + previous_sleep_time_) {
+            previous_sleep_time_ = kSleepConst + previous_sleep_time_ - diff;
+            usleep(kSleepConst * 1000);
+        } else {
+            previous_sleep_time_ = 0;
+        }
+    }
+
+ private:
+
+    void Update(uint64_t diff) {
         for (auto task : tasks_) {
             if (task) {
                 task->Update(diff);
@@ -131,6 +163,13 @@ class TimerManager {
     }
 
  private:
+    //Is this still needed?? [On linux some time ago not working 50ms]
+    const uint64_t kSleepConst = 100;
+
+    uint64_t current_time_;
+    uint64_t previous_time_;
+    uint64_t previous_sleep_time_;
+
     std::list<std::shared_ptr<TimerTask> > tasks_;
 };
 
