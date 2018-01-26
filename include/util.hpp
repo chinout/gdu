@@ -13,12 +13,12 @@ typedef std::vector<std::string> Tokens;
 inline void split(const std::string & src, const std::string & sep, std::vector<std::string> & tokens) {
     tokens.clear();
     std::string s;
-    for(auto i = src.begin(); i != src.end(); i++) {
-        if (sep.find(*i) != std::string::npos) {
+    for(auto ch : src) {
+        if (sep.find(ch) != std::string::npos) {
             tokens.push_back(s);
             s = "";
         } else {
-            s += *i;
+            s += ch;
         }
     }
     if ( s.length() || tokens.size() ) {
