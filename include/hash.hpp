@@ -71,4 +71,4 @@ inline uint64_t MurmurHash64 ( const void * key, int len, unsigned int seed ) {
 }  // namespace gdu
 }  // namespace gdp
 
-#endif  // GDU_TO_INT_HPP_
+#endif  // GDU_HASH_HPP_

@@ -80,4 +80,4 @@ class ConsistentLockedMap {
 }  // namespace gdu 
 }  // namespace gdp
 
-#endif  // GDU_LOCKED_MAP_HPP_
+#endif  // GDU_CONSISTENT_LOCKED_MAP_HPP_
