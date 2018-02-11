@@ -9,7 +9,7 @@ int main() {
     string nodes[] = {"127.0.0.1:1234", "127.0.0.1:1235", "127.0.0.1:1236"};
     ConsistentLockedMap<uint32_t, string> consistent_map;
     for (auto& node : nodes) {
-        uint32_t hash = hash_code(node, 3);
+        uint32_t hash = HashCode(node, 3);
         std::cout << hash << std::endl;
         consistent_map.insert(hash, node);
     }

@@ -14,7 +14,7 @@ private:
     int foo_;
 };
 
-#define sFoo gdp::gdu::Singleton<Foo>::get_instance()
+#define sFoo gdp::gdu::Singleton<Foo>::Instance()
 
 int main() {
     sFoo.set_foo(1); 

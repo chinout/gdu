@@ -10,7 +10,7 @@ namespace gdu {
 
 // return a hash code for the input, as Java hashCode() 
 // use horner's rule : s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
-inline uint32_t hash_code(const std::string& input, uint32_t mod) {
+inline uint32_t HashCode(const std::string& input, uint32_t mod) {
     uint32_t result = 0;
     uint32_t radis = 31;
     for (auto i = 0; i < input.length(); i++) {
