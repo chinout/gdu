@@ -52,10 +52,10 @@ inline int CreateDaemon() {
     return 0; 
 }
 
-inline bool CreatePidFile() {
-    int fd = open(".pid", O_TRUNC | O_RDWR);
+inline bool CreatePidFile(const char* path = ".pid") {
+    int fd = open(path, O_TRUNC | O_RDWR);
     if (fd == -1) {
-        fd = open(".pid", O_CREAT | O_RDWR, 0644);
+        fd = open(path, O_CREAT | O_RDWR, 0644);
         if (fd == -1) {
             // create failed
             return false;
