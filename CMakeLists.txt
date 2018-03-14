@@ -13,6 +13,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_executable(locked_map samples/locked_map.cpp)
 add_executable(locked_list samples/locked_list.cpp)
+add_executable(locked_queue samples/locked_queue.cpp)
 add_executable(singleton samples/singleton.cpp)
 add_executable(time samples/time.cpp)
 add_executable(to_int samples/to_int.cpp)

@@ -30,9 +30,15 @@ class LockedMap {
         data_[key] = value;
     }
 
-    typename std::map<K, V>::iterator find(const K& key) {
+    bool find(const K& key, V& value) {
         std::lock_guard<std::mutex> g(this->mutex_);
-        return data_.find(key);
+        auto it = data_.find(key);
+        if (it == data_.end()) {
+            return false;
+        }
+
+        value = it->second;
+        return true;
     }
 
     bool erase(const K& key) {
@@ -50,15 +56,14 @@ class LockedMap {
         return data_.size();
     }
 
-    typename std::map<K, V>::iterator begin() {
-        std::lock_guard<std::mutex> g(this->mutex_);
-        return data_.begin();
+    void lock() {
+        mutex_.lock();
     }
 
-    typename std::map<K, V>::iterator end() {
-        std::lock_guard<std::mutex> g(this->mutex_);
-        return data_.end();
+    void unlock() {
+        mutex_.unlock();
     }
+
  private:
     std::map<K, V> data_;
     std::mutex mutex_;

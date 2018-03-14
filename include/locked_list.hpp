@@ -50,14 +50,21 @@ class LockedList {
         return data_.size();
     }
 
-    typename std::list<T>::iterator begin() {
-        std::lock_guard<std::mutex> g(this->mutex_);
-        return data_.begin();
+    // ! get top of the queue. Rember to unlock after use.
+    T& peek() {
+        lock();
+
+        T& result = data_.front();
+
+        return result;
     }
 
-    typename std::list<T>::iterator end() {
-        std::lock_guard<std::mutex> g(this->mutex_);
-        return data_.end();
+    void lock() {
+        mutex_.lock();
+    }
+
+    void unlock() {
+        mutex_.unlock();
     }
 
  private:

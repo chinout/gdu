@@ -8,9 +8,10 @@ int main() {
     LockedMap<int, int> lmap;
     lmap.insert(1, 1);
     lmap.insert(2, 2);
-    auto ret = lmap.find(2);
+    int second;
+    bool ret = lmap.find(2, second);
     cout << lmap.size() << endl;
-    cout << ret->second << endl;
+    cout << second << endl;
     
     lmap.erase(2);
     cout << lmap.size() << endl;

@@ -32,10 +32,10 @@ class ConsistentLockedMap {
         data_[hash] = node;
     }
 
-    typename std::map<K, V>::iterator find(const K& hash) {
+    bool find(const K& hash, V& node) {
         std::lock_guard<std::mutex> g(this->mutex_);
         if (data_.empty()) {
-            return data_.end();
+            return false;
         }
 
         auto it = data_.lower_bound(hash);
@@ -44,7 +44,8 @@ class ConsistentLockedMap {
             it = data_.begin();
         }
 
-        return it;
+        node = it->second;
+        return true;
     }
 
     size_t erase(uint32_t hash) {
@@ -62,14 +63,12 @@ class ConsistentLockedMap {
         return data_.size();
     }
 
-    typename std::map<K, V>::iterator begin() {
-        std::lock_guard<std::mutex> g(this->mutex_);
-        return data_.begin();
-    } 
+    void lock() {
+        mutex_.lock();
+    }
 
-    typename std::map<K, V>::iterator end() {
-        std::lock_guard<std::mutex> g(this->mutex_);
-        return data_.end();
+    void unlock() {
+        mutex_.unlock();
     }
 
  private:
