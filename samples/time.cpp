@@ -8,8 +8,8 @@ class Master {
  public:
     void start() {
         manager_.AddTask(this, 1 * kInMilliSecond, &Master::Update1Sec);
-        // manager_.AddTask(this, 3 * kInMilliSecond, &Master::Update3Sec);
-        // manager_.AddTask(this, 3 * kMinute * kInMilliSecond, &Master::Update3Min);
+        manager_.AddTask(this, 3 * kInMilliSecond, &Master::Update3Sec);
+        manager_.AddTask(this, 3 * kMinute * kInMilliSecond, &Master::Update3Min);
 
         while (true) {
             manager_.Tick();    
@@ -17,15 +17,15 @@ class Master {
     }
 
     void Update1Sec() {
-        cout << get_time() << endl;
+        cout << "Update1Sec: " << get_time() << endl;
     }
 
     void Update3Sec() {
-        cout << get_time() << endl;
+        cout << "Update3Sec: " << get_time() << endl;
     }
 
     void Update3Min() {
-        cout << get_time() << endl;
+        cout << "Update3Min: " << get_time() << endl;
     }
 
  private:
@@ -35,6 +35,9 @@ class Master {
 };
 
 int main() {
+    cout << kDay << endl;
+    cout << kMonth << endl;
+    cout << kYear << endl;
     cout << get_time() << endl;
     cout << get_millisecond() << endl;
     cout << get_date() << endl;

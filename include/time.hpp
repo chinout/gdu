@@ -14,16 +14,13 @@
 namespace gdp {
 namespace gdu {
 
-enum TimeConstants
-{
-    kMinute         = 60,
-    kHour           = kMinute * 60,
-    kDay            = kHour * 24,
-    kWeek           = kDay * 7,
-    kMonth          = kDay * 30,
-    kYear           = kMonth * 12,
-    kInMilliSecond  = 1000,
-};
+const uint64_t kInMilliSecond  = 1000;
+const uint64_t kMinute         = kInMilliSecond * 60;
+const uint64_t kHour           = kMinute * 60;
+const uint64_t kDay            = kHour * 24;
+const uint64_t kWeek           = kDay * 7;
+const uint64_t kMonth          = kDay * 30;
+const uint64_t kYear           = kMonth * 12;
 
 inline uint64_t get_time() {
     std::time_t time = std::time(nullptr);
