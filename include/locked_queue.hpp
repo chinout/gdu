@@ -22,7 +22,7 @@ class LockedQueue {
 
     void add(const T& item) {
         std::lock_guard<std::mutex> g(this->mutex_);
-        return queue_.push_back(item);
+        return queue_.emplace_back(item);
     }
 
     bool next(T& result) {

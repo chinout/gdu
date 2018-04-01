@@ -14,7 +14,7 @@
 namespace gdp {
 namespace gdu {
 
-const uint64_t kInMilliSecond  = 1000;
+const uint64_t kSecond         = 1000;
 const uint64_t kMinute         = kInMilliSecond * 60;
 const uint64_t kHour           = kMinute * 60;
 const uint64_t kDay            = kHour * 24;
