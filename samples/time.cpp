@@ -7,9 +7,9 @@ using namespace gdp::gdu;
 class Master {
  public:
     void start() {
-        manager_.AddTask(this, 1 * kInMilliSecond, &Master::Update1Sec);
-        manager_.AddTask(this, 3 * kInMilliSecond, &Master::Update3Sec);
-        manager_.AddTask(this, 3 * kMinute * kInMilliSecond, &Master::Update3Min);
+        manager_.AddTask(this, 1 * kSecond, &Master::Update1Sec);
+        manager_.AddTask(this, 3 * kSecond, &Master::Update3Sec);
+        manager_.AddTask(this, 3 * kMinute, &Master::Update3Min);
 
         while (true) {
             manager_.Tick();    
