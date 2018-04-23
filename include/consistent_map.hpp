@@ -5,7 +5,7 @@
 
 #include <thread>
 #include <mutex>
-#include <map>
+#include <unordered_map>
 #include <algorithm>
 #include <utility>
 #include <functional>
@@ -58,7 +58,7 @@ class ConsistentMap {
     }
 
  private:
-    std::map<K, V> data_;
+    std::unordered_map<K, V> data_;
 };
 
 }  // namespace gdu 
